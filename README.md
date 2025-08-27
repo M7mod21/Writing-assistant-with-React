@@ -22,7 +22,7 @@ A modern, responsive React app that helps users generate, summarize, paraphrase,
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/ai-writing-assistant.git
+   git clone https://github.com/M7mod21/Writing-assistant-with-React.git
    cd ai-writing-assistant
    ```
 
