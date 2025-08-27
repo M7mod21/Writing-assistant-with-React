@@ -50,7 +50,7 @@ A modern, responsive React app that helps users generate, summarize, paraphrase,
 
 ## Demo
 
-[Live Demo]([#](https://writing-assistant-with-react.vercel.app/)) <!-- Add your deployed link here -->
+[Live Demo](https://writing-assistant-with-react.vercel.app/)<!-- Add your deployed link here -->
 
 ## License
 
