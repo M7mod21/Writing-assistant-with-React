@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import "./App.css";
 
 const TOOLS = [
@@ -16,32 +15,38 @@ function App() {
   const [tool, setTool] = useState("Summarize"); 
   const [error, setError] = useState("");
 
-  const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-
   const handleSubmit = async () => {
-    try {
-      setLoading(true);
-      setResult(""); 
-      setError(""); 
+  try {
+    setLoading(true);
+    setResult("");
+    setError("");
 
-      let prompt = inputText || "name 10 arabic countries";
-      if (tool === "Summarize") prompt = `Summarize: ${prompt}`;
-      if (tool === "Write Essay")
-        prompt = `Write an essay about: ${prompt} with 200 words.`;
-      if (tool === "Paraphrasing") prompt = `Paraphrase: ${prompt}`;
-      if (tool === "Grammar Correction")
-        prompt = `Grammar Correction: ${prompt}`;
+    let prompt = inputText || "name 10 arabic countries";
+    if (tool === "Summarize") prompt = `Summarize: ${prompt}`;
+    if (tool === "Write Essay")
+      prompt = `Write an essay about: ${prompt} with 200 words.`;
+    if (tool === "Paraphrasing") prompt = `Paraphrase: ${prompt}`;
+    if (tool === "Grammar Correction")
+      prompt = `Grammar Correction: ${prompt}`;
 
-      const response = await model.generateContent(prompt);
-      setResult(response.response.text);
-    } catch (error) {
-      console.error("error:", error);
-      setError("There is an error with Gemini API");
-    } finally {
-      setLoading(false);
-    }
-  };
+const response = await fetch("https://writing-assistant-with-react.onrender.com/api/generate", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({ prompt }),
+});
+
+    const data = await response.json();
+    setResult(data?.candidates?.[0]?.content?.parts?.[0]?.text || "No result.");
+  } catch (error) {
+    console.error("error:", error);
+    setError("There is an error with the server.");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className="app">
