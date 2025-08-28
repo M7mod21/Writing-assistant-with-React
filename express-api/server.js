@@ -3,17 +3,20 @@ import cors from "cors";
 import fetch from "node-fetch";
 import dotenv from "dotenv";
 
-app.use(cors({
-  origin: "https://writing-assistant-with-react.vercel.app/", 
-}));
-
+// تهيئة متغيرات البيئة أولًا
 dotenv.config();
+
+// إنشاء تطبيق Express
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+// تفعيل CORS و JSON parsing
+app.use(cors({
+  origin: "https://writing-assistant-with-react.vercel.app", // لاحظ إزالة / في النهاية
+}));
 app.use(express.json());
 
+// Routes
 app.post("/api/generate", async (req, res) => {
   const { prompt } = req.body;
 
@@ -41,6 +44,7 @@ app.post("/api/generate", async (req, res) => {
   }
 });
 
+// تشغيل السيرفر
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
